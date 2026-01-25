@@ -18,7 +18,7 @@ export default function Home() {
             Capture, organize, and manage you job application in one place.
           </p>
 
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="flex flex-col items-center gap-4  ">
 
             <Link href="/sign-up">
             
@@ -64,7 +64,7 @@ export default function Home() {
             </Button>
                 </Link>
 
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground opacity-90 text-center">
               Free forever. No credit card required.
             </p>
           </div>
