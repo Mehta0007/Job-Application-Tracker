@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,9 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { signUp } from "@/lib/auth/auth-client";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
   const [name, setName] = useState("")
@@ -20,15 +27,22 @@ export default function SignUp() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
+  const router = useRouter()
+
  async function handleSubmit(e: React.FormEvent ) {
   e.preventDefault();
   setError("")
   setLoading(true)
 
   try {
-    
-  } catch (err) {
-    setError("something went wrong")
+    await signUp.email({
+      name,
+      email,
+      password,
+    })
+    router.push("/dashboard")
+  } catch (err: any ) {
+    setError( err?.message || "something went wrong")
   } finally {
     setLoading(false)
   }
@@ -55,7 +69,11 @@ export default function SignUp() {
           <form 
           onSubmit={handleSubmit}
           className="space-y-5">
-
+            {error && (
+              <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                {error}
+              </div>
+            )}
             {/* Name */}
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
@@ -100,8 +118,10 @@ export default function SignUp() {
             </div>
 
             {/* Submit */}
-            <Button type="submit" size="lg" className="w-full">
-              Create account
+            <Button type="submit" size="lg" className="w-full"
+            disabled={loading}
+            >
+             {loading ? "Creating account..." : "Create account"}
             </Button>
 
             {/* Footer */}
