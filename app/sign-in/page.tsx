@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +11,41 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "@/lib/auth/auth-client";
 
 export default function SignIn() {
+
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const router = useRouter()
+
+ async function handleSubmit(e: React.FormEvent ) {
+  e.preventDefault();
+  setError("")
+  setLoading(true)
+
+  try {
+    await signIn.email({
+      email,
+      password,
+    })
+    router.push("/dashboard")
+  } catch (err: any ) {
+    setError( err?.message || "something went wrong")
+  } finally {
+    setLoading(false)
+  }
+ }
+
+
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-muted/30 px-4">
 
@@ -29,7 +64,15 @@ export default function SignIn() {
 
         {/* Form */}
         <CardContent>
-          <form className="space-y-5">
+          <form 
+          onSubmit={handleSubmit}
+          className="space-y-5">
+
+          {error && (
+              <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                {error}
+              </div>
+            )}
 
             {/* Email */}
             <div className="space-y-2">
@@ -38,6 +81,8 @@ export default function SignIn() {
               <Input
                 id="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
               />
@@ -50,14 +95,18 @@ export default function SignIn() {
               <Input
                 id="password"
                 type="password"
+                  value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
               />
             </div>
 
             {/* Submit */}
-            <Button type="submit" size="lg" className="w-full">
-              Sign in
+            <Button type="submit" size="lg" className="w-full"
+            disabled={loading}
+            >
+             {loading ? "Signing in...": "Sign in"}
             </Button>
 
             {/* Footer */}
