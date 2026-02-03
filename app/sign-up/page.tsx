@@ -34,19 +34,24 @@ export default function SignUp() {
   setError("")
   setLoading(true)
 
-  try {
-    await signUp.email({
-      name,
-      email,
-      password,
-    })
-    router.push("/dashboard")
-  } catch (err: any ) {
-    setError( err?.message || "something went wrong")
-  } finally {
-    setLoading(false)
+   try {
+      const result = await signUp.email({
+        name,
+        email,
+        password,
+      });
+
+      if (result.error) {
+        setError(result.error.message ?? "Failed to sign up");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
   }
- }
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-muted/30 px-4">
