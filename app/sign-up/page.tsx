@@ -42,8 +42,9 @@ export default function SignUp() {
       });
 
       if (result.error) {
-        setError(result.error.message ?? "Failed to sign up");
-      } else {
+  console.error("SIGNUP ERROR:", result.error);
+  setError(result.error.message || JSON.stringify(result.error));
+} else {
         router.push("/dashboard");
       }
     } catch (err) {
