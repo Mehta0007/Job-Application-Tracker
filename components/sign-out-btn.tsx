@@ -14,7 +14,7 @@ export default function SignOutButton() {
         if (result.data) {
           router.push("/sign-in");
         } else {
-          alert("Error signing out");
+          alert("Error while signing out");
         }
       }}
     >
