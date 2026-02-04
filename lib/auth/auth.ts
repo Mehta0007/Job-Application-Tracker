@@ -12,20 +12,26 @@ const db = client.db()
 
 
 export const auth = betterAuth({
-    secret: process.env.BETTER_AUTH_SECRET,
+  secret: process.env.BETTER_AUTH_SECRET,
 
-     trustedOrigins: [
-    "http://localhost:3000",
-    "https://job-application-tracker-2ebj.vercel.app",
-  ],
+  database: mongodbAdapter(db, {
+    client,
+  }),
 
-    database: mongodbAdapter(db, {
-        client,
-    }),
-    emailAndPassword: {
-        enabled: true,
-    }
-})
+  emailAndPassword: {
+    enabled: true,
+  },
+
+  routes: {
+    public: [
+      "/",          // landing
+      "/sign-in",
+      "/sign-up",
+      "/api/auth",  // auth endpoints
+    ],
+  },
+});
+
 
  export async function getSession() {
     const result = await auth.api.getSession({
