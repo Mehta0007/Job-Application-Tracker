@@ -32,10 +32,10 @@ const JobApplicationSchema = new Schema<IJobApplication>(
     location: {
       type: String,
     },
-    status: {
-      type: String,
-      required: true,
-      default: "applied",
+   status: {
+     type: String,
+     enum: ["applied", "interview", "offer", "rejected"],
+     default: "applied",
     },
     columnId: {
       type: Schema.Types.ObjectId,

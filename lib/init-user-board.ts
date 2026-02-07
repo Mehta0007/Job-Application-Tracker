@@ -1,0 +1,59 @@
+import { connectDB } from "./db";
+import { Board, Column } from "./models";
+
+const DEFAULT_COLUMNS = [
+  {
+    name: "Wish List",
+    order: 0,
+  },
+  {
+    name: "Applied",
+    order: 1,
+  },
+  {
+    name: "Interview",
+    order: 2,
+  },
+  {
+    name: "Offer",
+    order: 3,
+  },
+];
+
+export async function initializeUserBoard(userId: string) {
+  await connectDB();
+
+  // Check if board already exists
+  const existingBoard = await Board.findOne({
+    userId,
+    name: "Job Hunt",
+  });
+
+  if (existingBoard) {
+    return existingBoard;
+  }
+
+  // Create board
+  const board = await Board.create({
+    name: "Job Hunt",
+    userId,
+    columns: [],
+  });
+
+  // Create default columns
+  const columns = await Column.insertMany(
+    DEFAULT_COLUMNS.map((col) => ({
+      name: col.name,
+      order: col.order,
+      boardId: board._id,
+      jobApplications: [], //<==
+    }))
+  );
+
+  // Attach columns to board
+  board.columns = columns.map((c) => c._id);
+
+  await board.save();
+
+  return board;
+}
