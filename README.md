@@ -1,36 +1,167 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💼 Job Application Tracker
 
-## Getting Started
+A full-stack web application designed to help users manage and organize their job search using Kanban-style boards.
 
-First, run the development server:
+This project focuses on real-world application architecture, authentication flows, database modeling, and production deployment rather than demo-only features.
+
+---
+
+## 🚀 Live Application
+
+👉 https://your-vercel-url.vercel.app
+
+---
+
+## 🧠 Overview
+
+Job Application Tracker allows users to:
+
+- Create an account and securely authenticate
+- Access a private dashboard
+- Organize job applications into columns
+- Track application progress visually
+- Manage job search data in a structured way
+
+Each user operates in an isolated environment with their own boards, columns, and job records.
+
+---
+
+## ✨ Key Features
+
+✔ Secure email/password authentication  
+✔ Session-based access control  
+✔ User-scoped dashboards  
+✔ Kanban board workflow  
+✔ Drag-and-drop job management  
+✔ MongoDB relational modeling  
+✔ Responsive UI  
+
+---
+
+## 🏗️ Tech Stack
+
+**Frontend**
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- dnd-kit (Drag & Drop)
+
+**Backend**
+- Next.js Server Components
+- Better Auth
+- MongoDB Atlas
+- Mongoose
+
+**Deployment**
+- Vercel
+
+---
+
+## 🧩 Architecture Highlights
+
+- Server-side data fetching for dashboard rendering
+- Separation of DB models and UI types
+- Reusable domain models
+- Middleware-based route control
+- Optimistic UI updates via hooks
+- Session synchronization across client/server
+
+---
+
+## 🔐 Authentication Flow
+
+Authentication is implemented using Better Auth with MongoDB adapter:
+
+- Email/password login
+- Secure session cookies
+- Protected routes
+- Auth-aware UI rendering
+
+---
+
+## 🗄️ Data Model
+
+Core entities:
+
+- Board → Container for workflow
+- Column → Stages within board
+- JobApplication → Individual job records
+
+Relationships:
+
+User → Board → Columns → JobApplications
+
+Order fields are used instead of array indexes to guarantee deterministic UI state.
+
+---
+
+## ⚠️ Challenges & Learnings
+
+This project required solving real issues typically hidden in tutorials:
+
+- MongoDB Atlas authentication errors
+- SSL / network access problems
+- Environment variable mismatches
+- Server vs Client component boundaries
+- Hydration errors
+- Auth state desynchronization
+- Vercel production configuration
+
+---
+
+## 🧪 Local Development
+
+Clone repository:
+
+```bash
+git clone https://github.com/your-username/job-application-tracker.git
+cd job-application-tracker
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create `.env.local`:
+
+```env
+MONGODB_URI=your_mongodb_uri
+BETTER_AUTH_SECRET=your_secret
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+```
+
+Run dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📌 Project Status
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Actively evolving.
 
-## Learn More
+Planned improvements:
 
-To learn more about Next.js, take a look at the following resources:
+- Advanced board operations
+- Filtering & search
+- Analytics & insights
+- Performance optimizations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👨‍💻 Author
 
-## Deploy on Vercel
+Ankit  
+Software Engineer in Progress
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+
+This project is for learning and portfolio purposes.
