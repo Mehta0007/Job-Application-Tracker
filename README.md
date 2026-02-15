@@ -8,7 +8,7 @@ This project focuses on real-world application architecture, authentication flow
 
 ## 🚀 Live Application
 
-👉 https://your-vercel-url.vercel.app
+👉 https://job-application-tracker-2ebj.vercel.app
 
 ---
 
